@@ -8,5 +8,6 @@ router.get('/dashboard',auth.verifyToken,auth.isAdmin,adminController.adminDashb
 router.put('/user/:id',auth.verifyToken,auth.isAdmin,adminController.editUser);
 router.post('/user/search',auth.verifyToken,auth.isAdmin,adminController.searchUser);
 router.delete('/user/:id',auth.verifyToken,auth.isAdmin,adminController.deleteUser);
+router.post('/adduser',auth.isAdmin,adminController.addUser);
 
 module.exports = router;

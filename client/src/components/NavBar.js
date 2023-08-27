@@ -7,21 +7,31 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import {useDispatch,useSelector} from 'react-redux'
+import { removeAuth } from '../app/features/Auth/authSlice';
 
 
 function NavBar() {
 
     const navigate = useNavigate()
     console.log(localStorage.getItem('user'))
-    const user = localStorage.getItem('user') ? localStorage.getItem('user'):null
+    // const user = localStorage.getItem('user') ? localStorage.getItem('user'):null
+    const dispatch = useDispatch()
 
+    const authState = useSelector((state) => {
+      return state.auth.authState;
+      // console.log(state.auth.authState)
+    })
 
     const handleLogout = async() => {
 
         try {
             await axios.get('http://localhost:4000/logout');
 
-            localStorage.removeItem('user');
+            // localStorage.removeItem('user');
+            
+            dispatch(removeAuth())
+
 
             navigate('/login');
         } catch (error) {
@@ -42,9 +52,9 @@ function NavBar() {
               >
               </IconButton>
               <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                User Management System
+                User Management System  
               </Typography>
-              {!user ? (
+              {!authState ? (
                     <React.Fragment>
                         <Button color="inherit" onClick={() => navigate('/login')}>Sign In</Button>
                         <Button color="inherit" onClick={() => navigate('/signup')}>Sign Up</Button>
@@ -52,7 +62,12 @@ function NavBar() {
                 ) : (
                     <React.Fragment>
                         <Button color="inherit" onClick={handleLogout}>Logout</Button>
-                        <Button color="inherit" onClick={() => navigate('/editprofile')}>Edit Profile</Button>
+                        {/* <Button color="inherit" onClick={() => navigate('/editprofile')}>Edit Profile</Button> */}
+                        {authState.role === 'admin' ? (
+                          <Button color="inherit" onClick={()=> navigate('/dashboard')}>Dashboard</Button>
+                        ) : (
+                          <Button color='inherit' onClick={() => navigate('/viewprofile')}>View Profile</Button>
+                        )}
                     </React.Fragment>
                 )}
             </Toolbar>

@@ -20,6 +20,9 @@ const cors = require('cors');
 app.use(cors({credentials: true , origin: 'http://localhost:3000'}));
 
 
+const fileupload = require('express-fileupload');
+app.use(fileupload({useTempFiles: true , tempFileDir:'/temp/'}));
+
 
 const adminRouter = require('./routes/adminRoutes')
 app.use('/admin',adminRouter)

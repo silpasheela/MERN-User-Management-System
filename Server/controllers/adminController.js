@@ -73,9 +73,57 @@ const deleteUser = async (req,res) => {
     }
 }
 
+
+//ADD USER BY ADMIN
+
+const addUser = async (req,res) => {
+    
+    const {name,email,password,confirmPassword} = req.body;
+    if(!(name && email && password && confirmPassword)) {
+        return res.status(400).json({
+            message: 'Please fill out the required fields !'
+        })
+    }
+    try {
+        if(password!=confirmPassword) {
+            return res.status(400).json({
+                message: 'Password doesnot match !'
+            })
+        }
+        const existingUser = await User.find({email:email});
+        if(existingUser.length != 0) {
+            return res.status(400).json({
+                message: 'User already exists !'
+            })
+        }
+
+        else{
+            const securedPassword = await bcrypt.hash(password,10);
+            const user = await User.create({
+                name,
+                email,
+                password: securedPassword,
+                profileImage: null
+            })
+            const responseData = {
+                name: user.name,
+                email: user.email
+            }
+
+            res.status(200).json({
+                user: responseData,
+                message: 'User Registration Successful'
+            })
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 module.exports = {
     adminDashboard,
     editUser,
     searchUser,
-    deleteUser
+    deleteUser,
+    addUser
 }

@@ -2,6 +2,13 @@ const bcrypt = require('bcrypt');
 const User = require('../models/userModel')
 const jwt = require('jsonwebtoken');
 
+const cloudinary = require('cloudinary').v2;
+cloudinary.config({
+    cloud_name: 'dmho1xzge',
+    api_key:"823174675493399",
+    api_secret:"QatdjHHLj-4VapxJ3jBwZaXZkuo-NNfeLVKd8U_C0"
+})
+
 
 //USER REGISTRATION
 
@@ -121,10 +128,38 @@ const userHome = async (req,res) => {
 
 const updateProfile = async(req,res) => {
 
+    const {id} = req.params;
+
     try {
-        
+        const user = await User.find({_id:id});
+        console.log(user);
+        if (user.length === 0) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        let result;
 
+        if(req.files) {
+            // result = await cloudinary.uploader.upload(req.files.profilePic.tempFilePath , {folder: 'users'});
+            // console.log(result.secure_url);
+            try {
+                result = await cloudinary.uploader.upload(req.files.profilePic.tempFilePath, { folder: 'users' });
+            } catch (error) {
+                console.error(error);
+                return res.status(500).json({ message: 'Error uploading file' });
+            }
+        }
 
+        user[0].profileImage = result.secure_url;
+        // await user[0].save()
+
+        try {
+            await user[0].save();
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json({ message: 'Error updating user data' });
+        }
+
+        console.log(user[0]);
 
         res.status(200).json({
             message: 'Updation Successful',
@@ -134,6 +169,7 @@ const updateProfile = async(req,res) => {
         console.log(error)
     }
 }
+
 
 
 //USER LOGOUT

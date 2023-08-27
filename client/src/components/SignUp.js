@@ -1,9 +1,6 @@
 import * as React from 'react';
-// import Box from '@mui/material/Box';
-// import TextField from '@mui/material/TextField';
-// import Button from '@mui/material/Button';
-import { Box, Button, Stack, TextField, Typography } from '@mui/material';
-
+import { Box, Button,  TextField, Typography } from '@mui/material';
+import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -36,26 +33,6 @@ function SignUp() {
         }
       };
 
-//   return (
-//     <Box
-//     component="form"
-//     sx={{
-//       '& > :not(style)': { m: 1, width: '25ch' },
-//     }}
-//     noValidate
-//     autoComplete="off"
-//   >
-//     <TextField id="outlined-basic" label="Enter your Name" variant="outlined" name='name' value={formData.name} onChange={handleInputChange}/>
-//     <TextField id="outlined-basic" label="Enter your email" variant="outlined" name='email' value={formData.email} onChange={handleInputChange} />
-//     <TextField id="outlined-basic" label="Enter your password" variant="outlined" name='password' value={formData.password} onChange={handleInputChange}/>
-//     <TextField id="outlined-basic" label="Re-enter the password" variant="outlined" name='confirmPassword' value={formData.confirmPassword} onChange={handleInputChange}/>
-
-//     <Stack spacing={2} direction="row">
-//       <Button variant="contained" onClick={handleSignUp}>Sign up</Button>
-//     </Stack>
-    
-//   </Box>
-//   )
 
 return (
     <Box
@@ -123,6 +100,10 @@ return (
         >
             Sign up
         </Button>
+
+        <Link to="/login" sx={{ marginTop: 2, color: '#ff5722', textDecoration: 'none', fontWeight: 'bold' }}>
+        Already have an account ? Log In
+        </Link>
     </Box>
 );
 }
