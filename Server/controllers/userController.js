@@ -8,9 +8,9 @@ const upload = multer({ dest: 'uploads/' });
 
 const cloudinary = require('cloudinary').v2;
 cloudinary.config({
-    cloud_name: 'dk81bsiz2',
-    api_key:"334739518657796",
-    api_secret:"9OxvjE_0mewIx-NNfeLVKd8U_C0"
+    cloud_name: process.env.CLOUD_NAME,
+    api_key: process.env.API_KEY,
+    api_secret: process.env.API_SECRET
 })
 
 
@@ -175,7 +175,6 @@ const updateProfile = async (req, res) => {
     }
   };
   
-
 
 
 //USER LOGOUT

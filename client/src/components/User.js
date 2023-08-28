@@ -18,7 +18,6 @@ function User() {
 
     const [editedUser,setEditedUser] = useState(null);
 
-
     const [editedProfileImage, setEditedProfileImage] = useState(null);
 
     const handleProfileImageChange = (e) => {
@@ -38,7 +37,7 @@ function User() {
             setEditedUser(response.data.user);
         })
 
-        .catch((error) => console.error('Error fetching user data:', error));
+        .catch((error) => console.error('Error in fetching user data:', error));
     },[])
 
 
@@ -47,24 +46,17 @@ function User() {
     const handleEditUser = async (e) => {
         e.preventDefault();
         console.log(editedUser)
-        // try {
-        // const response = await axios.patch('http://localhost:4000/update', editedUser);
-        // console.log(response.data);
-        // handleToggleEditUserModal();
-        // } 
-
         try {
             const formData = new FormData();
             formData.append('name', editedUser.name);
             formData.append('email', editedUser.email);
             formData.append('profileImage', editedProfileImage);
             console.log("hey",editedUser)
-            // const response = await axios.patch('http://localhost:4000/update', formData);
             const response = await axios.patch(`http://localhost:4000/update/${editedUser._id}`, formData);
 
             console.log(response.data);
 
-            setUserData(response.data.user); // Assuming the server sends back the updated user object
+            setUserData(response.data.user); 
             setEditedUser(response.data.user);
             handleToggleEditUserModal();
         } 
