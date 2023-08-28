@@ -1,6 +1,8 @@
 const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 4000;
+const multer = require('multer');
+
 
 const connectDB = require('./config/connect');
 
@@ -20,8 +22,11 @@ const cors = require('cors');
 app.use(cors({credentials: true , origin: 'http://localhost:3000'}));
 
 
-const fileupload = require('express-fileupload');
-app.use(fileupload({useTempFiles: true , tempFileDir:'/temp/'}));
+// const fileupload = require('express-fileupload');
+// app.use(fileupload({useTempFiles: true , tempFileDir:'/temp/'}));
+
+const upload = multer({ dest: 'uploads/' });
+
 
 
 const adminRouter = require('./routes/adminRoutes')

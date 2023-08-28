@@ -2,11 +2,15 @@ const bcrypt = require('bcrypt');
 const User = require('../models/userModel')
 const jwt = require('jsonwebtoken');
 
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' });
+
+
 const cloudinary = require('cloudinary').v2;
 cloudinary.config({
-    cloud_name: 'dmho1xzge',
-    api_key:"823174675493399",
-    api_secret:"QatdjHHLj-4VapxJ3jBwZaXZkuo-NNfeLVKd8U_C0"
+    cloud_name: 'dk81bsiz2',
+    api_key:"334739518657796",
+    api_secret:"9OxvjE_0mewIx-NNfeLVKd8U_C0"
 })
 
 
@@ -126,49 +130,51 @@ const userHome = async (req,res) => {
 
 //UPDATE USER PROFILE
 
-const updateProfile = async(req,res) => {
 
-    const {id} = req.params;
-
+const updateProfile = async (req, res) => {
+    const { id } = req.params;
+  
     try {
-        const user = await User.find({_id:id});
-        console.log(user);
-        if (user.length === 0) {
-            return res.status(404).json({ message: 'User not found' });
-        }
-        let result;
-
-        if(req.files) {
-            // result = await cloudinary.uploader.upload(req.files.profilePic.tempFilePath , {folder: 'users'});
-            // console.log(result.secure_url);
-            try {
-                result = await cloudinary.uploader.upload(req.files.profilePic.tempFilePath, { folder: 'users' });
-            } catch (error) {
-                console.error(error);
-                return res.status(500).json({ message: 'Error uploading file' });
-            }
-        }
-
-        user[0].profileImage = result.secure_url;
-        // await user[0].save()
-
+      const user = await User.findById(id);
+  
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+  
+      // Handle image upload using Multer and Cloudinary
+      upload.single('profileImage')(req, res, async (error) => {
         try {
-            await user[0].save();
-        } catch (error) {
-            console.error(error);
-            return res.status(500).json({ message: 'Error updating user data' });
-        }
+          if (error) {
+            return res.status(500).json({ message: 'Image upload error' });
+          }
+  
+          if (req.file) {
+            // Upload the image to Cloudinary
+            const result = await cloudinary.uploader.upload(req.file.path);
+            user.profileImage = result.secure_url;
 
-        console.log(user[0]);
-
-        res.status(200).json({
-            message: 'Updation Successful',
+            console.log(result)
+          }
+          // Update other user fields if needed
+          user.name = req.body.name;
+          user.email = req.body.email;
+          
+          await user.save();
+          res.status(200).json({
+            message: 'Profile updated successfully',
             user: user
-        })
+          });
+        } catch (error) {
+          console.error(error);
+          return res.status(500).json({ message: 'Error updating user data' });
+        }
+      });
     } catch (error) {
-        console.log(error)
+      console.error(error);
+      res.status(500).json({ message: 'Internal server error' });
     }
-}
+  };
+  
 
 
 

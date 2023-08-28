@@ -59,8 +59,13 @@ function User() {
             formData.append('email', editedUser.email);
             formData.append('profileImage', editedProfileImage);
             console.log("hey",editedUser)
-            const response = await axios.patch('http://localhost:4000/update', formData);
+            // const response = await axios.patch('http://localhost:4000/update', formData);
+            const response = await axios.patch(`http://localhost:4000/update/${editedUser._id}`, formData);
+
             console.log(response.data);
+
+            setUserData(response.data.user); // Assuming the server sends back the updated user object
+            setEditedUser(response.data.user);
             handleToggleEditUserModal();
         } 
         
