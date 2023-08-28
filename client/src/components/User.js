@@ -79,9 +79,17 @@ function User() {
 
   return (
     <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-      <Card>
+      <Card
+          sx={{
+          maxWidth: 345,
+          margin: 'auto',
+          marginTop: 20,
+          boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+          borderRadius: '10px',
+          backgroundColor: '#CBEACA',
+        }}>
         <CardHeader
-          avatar={<Avatar alt={userData.name} src={userData.profileImage} sx={{ width: 100, height: 100 }} />}
+          avatar={<Avatar alt={userData.name} src={userData.profileImage} sx={{ width: 150, height: 150 }} />}
           title={userData.name}
           subheader={userData.email}
         />
@@ -99,7 +107,7 @@ function User() {
             variant="contained"
             color="secondary"
             component={Link}
-            to="/" 
+            to="/userhome" 
             style={{ marginLeft: '10px' }}
           >
             Go to Home

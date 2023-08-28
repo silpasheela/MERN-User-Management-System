@@ -43,7 +43,7 @@ function SignIn() {
             email: '' ,
             password: ''
            })
-           navigate('/');
+           navigate('/userhome');
         } catch (error) {
             console.log(error)
         }
@@ -60,10 +60,10 @@ function SignIn() {
         width: '30%',
         margin: 'auto',
         padding: '20px',
-        backgroundColor: '#f3f3f3',
+        backgroundColor: 'rgba(0, 0, 0, 0.2)',
         borderRadius: '8px',
         marginTop:  '100px',
-        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)'
+        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
     }}
     noValidate
     autoComplete="off"
@@ -90,7 +90,7 @@ function SignIn() {
         onChange={handleInputChange}
         sx={{ marginBottom: 2, width: '75%' }}
     />
-    <Button variant="contained" onClick={handleLogin} sx={{ width: '25%', backgroundColor: '#0AE4B3', color: '#fff' }}>
+    <Button variant="contained" onClick={handleLogin} sx={{ width: '25%', backgroundColor: '#1FAA59', color: '#fff' }}>
         Log In
     </Button>
     <Link to="/signup" sx={{ marginTop: 2, color: '#ff5722', textDecoration: 'none', fontWeight: 'bold' }}>

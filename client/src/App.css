@@ -36,3 +36,13 @@
     transform: rotate(360deg);
   }
 }
+
+body {
+  margin: 0;
+  padding: 0;
+  background-image: url(https://img.freepik.com/free-photo/top-view-desk-concept-with-copy-space_23-2148236856.jpg?w=2000);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+

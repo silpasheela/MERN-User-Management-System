@@ -45,7 +45,7 @@ return (
             padding: '20px',
             borderRadius: '8px',
             boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-            backgroundColor: '#f9f9f9',
+            backgroundColor: 'rgba(0, 0, 0, 0.2)',
             marginLeft: '25%',
             marginTop: '100px'
         }}
@@ -96,7 +96,7 @@ return (
         <Button
             variant="contained"
             onClick={handleSignUp}
-            sx={{ width: '25%', backgroundColor: '#0AE4B3', color: '#fff', '&:hover': { backgroundColor: '#0CE0FF' } }}
+            sx={{ width: '25%', backgroundColor: '#1FAA59', color: '#fff', '&:hover': { backgroundColor: '#6EC72D' } }}
         >
             Sign up
         </Button>

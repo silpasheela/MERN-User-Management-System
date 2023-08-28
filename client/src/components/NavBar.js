@@ -32,7 +32,6 @@ function NavBar() {
             
             dispatch(removeAuth())
 
-
             navigate('/login');
         } catch (error) {
             console.log(error);
@@ -62,7 +61,6 @@ function NavBar() {
                 ) : (
                     <React.Fragment>
                         <Button color="inherit" onClick={handleLogout}>Logout</Button>
-                        {/* <Button color="inherit" onClick={() => navigate('/editprofile')}>Edit Profile</Button> */}
                         {authState.role === 'admin' ? (
                           <Button color="inherit" onClick={()=> navigate('/dashboard')}>Dashboard</Button>
                         ) : (

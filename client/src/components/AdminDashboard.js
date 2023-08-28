@@ -118,6 +118,7 @@ function AdminDashboard() {
         marginTop: '50px',
         marginLeft: '80px',
         marginRight: '80px',
+        // eslint-disable-next-line no-dupe-keys
         justifyContent: 'space-between',
       }
     
@@ -251,7 +252,7 @@ function AdminDashboard() {
             variant="outlined"
             color="primary"
             component={Link}
-            to="/" 
+            to="/userhome" 
             style={{ marginTop: '20px' }}
         >
             Go to Home
